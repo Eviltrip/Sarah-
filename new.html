@@ -1,117 +1,210 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Birthday Invitation</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #f0f8ff;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Moana-Themed Birthday Invitation</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet"> <!-- Moana-themed font -->
+  <style>
+    /* Background animation */
+    body {
+      background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e') no-repeat center center fixed;
+      background-size: cover;
+      animation: backgroundAnimation 10s infinite alternate;
+      height: 100vh;
+      overflow: hidden;
+      font-family: 'Pacifico', cursive;
+    }
 
-        .invitation-card {
-            position: relative;
-            max-width: 600px;
-            width: 90%;
-            border: 2px solid #ddd;
-            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
-            overflow: hidden;
-            border-radius: 10px; /* Rounded corners for the card */
-        }
+    @keyframes backgroundAnimation {
+      0% { background-position: 0 0; }
+      100% { background-position: 0 10px; }
+    }
 
-        .invitation-card img {
-            width: 100%;
-            height: auto;
-            object-fit: cover;
-            border-radius: 10px; /* Ensure image corners match card */
-        }
+    .card {
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      margin: auto;
+      padding: 20px;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      max-height: 90vh; /* Limit height to ensure full visibility */
+      overflow: hidden; /* Hide overflow */
+    }
 
-        /* Spotlight effect */
-        .spotlight {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 30%, rgba(255, 255, 255, 0) 70%);
-            animation: spotlight-animation 3s infinite alternate;
-            pointer-events: none; /* Allow interaction with the card */
-        }
+    .btn-moana {
+      background-color: #2ec4b6;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: 10px 20px;
+      font-size: 20px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      margin: 10px 0; /* Spacing between buttons */
+    }
 
-        @keyframes spotlight-animation {
-            0% {
-                transform: scale(1);
-                opacity: 0.3;
-            }
-            100% {
-                transform: scale(1.1);
-                opacity: 0.5;
-            }
-        }
+    .invitation-container {
+      overflow-y: auto; /* Allow vertical scrolling */
+      max-height: 70vh; /* Set max height for scrolling */
+      position: relative;
+    }
 
-        .particle {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background-color: gold;
-            animation: shoot-up 3s ease-out infinite;
-            box-shadow: 0 0 10px gold, 0 0 20px gold;
-        }
+    .invitation-image {
+      display: none; /* Initially hidden */
+      max-width: 100%; /* Adjust width to fit the frame */
+      height: auto; /* Maintain aspect ratio */
+      animation: fadeIn 1s ease-in-out forwards;
+      border: 5px solid #ff9f1c;
+      border-radius: 20px;
+    }
 
-        @keyframes shoot-up {
-            0% {
-                opacity: 1;
-                transform: translateY(0) translateX(0);
-            }
-            100% {
-                opacity: 0;
-                transform: translateY(-300px) translateX(calc(150px * (var(--direction))));
-            }
-        }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
 
-        .particle-container {
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-        }
+    .menu {
+      display: none;
+      margin-top: 20px;
+    }
 
-        @media (max-width: 768px) {
-            .invitation-card {
-                width: 90%;
-                max-width: 350px;
-            }
-        }
-    </style>
+    .menu-item {
+      background-color: #2ec4b6;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 10px;
+      margin: 5px 0;
+      cursor: pointer;
+    }
+
+    .menu-item:hover {
+      background-color: #1ca69c;
+    }
+
+    .bubbles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .bubble {
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      background-color: rgba(255, 255, 255, 0.5);
+      border-radius: 50%;
+      opacity: 0;
+      animation: bubbleRise 5s linear infinite;
+    }
+
+    @keyframes bubbleRise {
+      0% {
+        transform: translateY(100%);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-150%);
+        opacity: 0;
+      }
+    }
+
+    .heart-sparkle {
+      background-color: #00ff00;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      position: absolute;
+      animation: sparkleMove 3s linear infinite;
+    }
+
+    @keyframes sparkleMove {
+      0% { transform: scale(0.5) translateY(0); opacity: 1; }
+      100% { transform: scale(1.5) translateY(-100px); opacity: 0; }
+    }
+  </style>
 </head>
 <body>
 
-    <div class="card invitation-card">
-        <img src="invitation.png" alt="Invitation">
-        <div class="spotlight"></div> <!-- Spotlight effect -->
+  <div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
+    <div class="card col-md-8 col-lg-6">
+      <h1>🌺 Sarah's Birthday Party 🌺</h1>
+      <button class="btn btn-moana" onclick="showInvitation()">Show Invitation</button>
 
-        <div class="particle-container">
-            <div class="particle" style="--direction: 0.5; animation-delay: 0s;"></div>
-            <div class="particle" style="--direction: -0.5; animation-delay: 0.1s;"></div>
-            <div class="particle" style="--direction: 0.3; animation-delay: 0.2s;"></div>
-            <div class="particle" style="--direction: -0.3; animation-delay: 0.3s;"></div>
-            <div class="particle" style="--direction: 0.6; animation-delay: 0.4s;"></div>
-            <div class="particle" style="--direction: -0.6; animation-delay: 0.5s;"></div>
-            <div class="particle" style="--direction: 0.4; animation-delay: 0.6s;"></div>
-            <div class="particle" style="--direction: -0.4; animation-delay: 0.7s;"></div>
+      <div class="invitation-container">
+        <img id="invitationImage" class="invitation-image" src="invitation.png" alt="Birthday Invitation">
+      </div>
+
+      <div class="menu" id="menu" style="margin-top: 20px; display: none;">
+        <button class="btn btn-moana" onclick="showVenue()">Venue</button>
+        <button class="btn btn-moana" onclick="showQRCode()">QR Code</button>
+      </div>
+
+      <div id="venueDetails" style="display:none; margin-top: 20px;">
+        <h5>Venue Details:</h5>
+        <p>j.v.r mahal 9819 HIG Thiruverkadu main road, Ayapakkam Housing Board Rd, near :, TNHB Colony, Chennai, Tamil Nadu 600077</p>
+      </div>
+
+      <div id="qrCode" style="display:none; margin-top: 20px;">
+        <div class="card" style="max-width: 300px; margin: 0 auto;"> 
+          <div class="card-body">
+            <h5 class="card-title">Scan QR Code:</h5>
+            <img src="Myqr.png" alt="QR Code" class="card-img-top" style="max-width: 100%; height: auto;">
+          </div>
         </div>
-    </div>
+      </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+      <div class="bubbles" id="bubbleContainer"></div>
+      <div class="heart-sparkle" id="heartSparkle" style="left: 50%; top: 80%;"></div>
+    </div>
+  </div>
+
+  <script>
+    function showInvitation() {
+      document.getElementById('invitationImage').style.display = 'block';
+      document.getElementById('menu').style.display = 'block';
+      document.querySelector('.btn-moana').style.display = 'none'; // Hide the button
+      addBubbles(30);
+      startHeartSparkle();
+      document.querySelector('h1').style.display = 'none'; // Hide the heading after showing the invitation
+    }
+
+    function showVenue() {
+      document.getElementById('venueDetails').style.display = 'block';
+      document.getElementById('qrCode').style.display = 'none';
+    }
+
+    function showQRCode() {
+      document.getElementById('qrCode').style.display = 'block';
+      document.getElementById('venueDetails').style.display = 'none';
+    }
+
+    function addBubbles(count) {
+      const container = document.getElementById('bubbleContainer');
+      for (let i = 0; i < count; i++) {
+        const bubble = document.createElement('div');
+        bubble.classList.add('bubble');
+        bubble.style.left = Math.random() * 100 + "%";
+        bubble.style.animationDuration = (Math.random() * 2 + 3) + "s";
+        container.appendChild(bubble);
+        setTimeout(() => bubble.remove(), 5000);
+      }
+    }
+
+    function startHeartSparkle() {
+      const sparkle = document.getElementById('heartSparkle');
+      sparkle.style.display = 'block';
+    }
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
